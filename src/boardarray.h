@@ -18,21 +18,30 @@ class BoardArray : public Board {
             // ALGORITHM IS PROVIDED IN INSTRUCTIONS.TXT
             
             entry->name;
-            int count = 0;
-            while (count < index && entry->compare(&array[count]))
-                count++;
-            if (index == SIZE && count == SIZE) {
+            int pos = 0;
+            while (pos < index && !entry->compare(&array[pos])) {
+                pos++;
+            }
+        
+            if (index == SIZE && pos == SIZE) {
                 cout << entry->name << "'s score is too low to be added!" << endl;
                 return;
             }
-            if (index < SIZE)
-                index++;
-            else
-                count = SIZE - 1;
-            for (int i = index - 1; i > count; i--) {
+        
+            int last;
+            if (index < SIZE) {
+                last = index;
+            } else {
+                last = SIZE - 1;
+            }
+ 
+            for (int i = last; i > pos; i--) {
                 array[i] = array[i - 1];
             }
-            array[count] = *entry;
+            
+            array[pos] = *entry;
+        
+            if (index < SIZE) index++;
         }
 
         void print() {
